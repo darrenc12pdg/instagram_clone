@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
+import { db } from './firebase';
 
 function App() {
 
@@ -21,6 +22,18 @@ function App() {
       }
 
   ]);
+
+
+
+  useEffect(() => {
+    // this is where the code runs
+db.collection('posts').onSnapshot(snapshot => {
+// everytime a new post is adde, this code fires
+setPosts(snapshot.docs.map(doc => doc.data()))
+})
+  }, []);
+
+
 
   return (
     <div className="app">
